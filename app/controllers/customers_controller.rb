@@ -6,17 +6,17 @@ class CustomersController < ApplicationController
 
     # the `geocoded` scope filters only customers with coordinates (latitude & longitude)
 
-    # @markers = @customers.geocoded.map do |customer|
-    #   {
-    #     lat: customer.latitude,
-    #     lng: customer.longitude,
-    #     infoWindow: render_to_string(partial: 'customers_details', locals: { customer: customer }),
-    #     image_url: helpers.asset_url('customer.png')
-    #   }
-    # end
+    @markers = @customers.geocoded.map do |customer|
+      {
+        lat: customer.latitude,
+        lng: customer.longitude,
+        infoWindow: render_to_string(partial: 'customers_details', locals: { customer: customer }),
+        image_url: helpers.asset_url('condominio.jpg')
+      }
+    end
 
     @customers = if params[:query].present?
-                   customer.search_by_name_and_size_price(params[:query])
+                   Customer.search_by_name_zone_and_address(params[:query])
                  else
                    Customer.all
                  end
@@ -32,7 +32,7 @@ class CustomersController < ApplicationController
   def edit; end
 
   def create
-    @customer = customer.new(customer_params)
+    @customer = Customer.new(customer_params)
     @customer.user_id = current_user.id
 
     if @customer.save
@@ -58,10 +58,10 @@ class CustomersController < ApplicationController
   private
 
   def set_customer
-    @customer = customer.find(params[:id])
+    @customer = Customer.find(params[:id])
   end
 
   def customer_params
-    params.require(:customer).permit(:name, :address, :price_per_day, :size, :available, :description, :photo)
+    params.require(:customer).permit(:name, :address, :value, :customer_since, :customer_final, :zone)
   end
 end

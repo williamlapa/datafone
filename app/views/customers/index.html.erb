@@ -1,0 +1,43 @@
+<div class="container d-flex justify-content-around">
+  <div class="justify-content-center">
+    <h1>curtomers</h1>
+  </div>
+  <div class="col-8">
+    <%= simple_form_for :search, url: curtomers_path, method: :get do |f| %>
+    <div class="search-form-control form-group">
+      <input class="form-control string required" type="text" name="query" id="query" placeholder="Find a curtomer" />
+      <button name="button" type="submit" class="btn btn-flat" >
+          <i class="fas fa-search"></i>Search
+          </button>
+    </div>
+    <% end %>
+  </div>
+</div>
+
+<div class="container d-flex">
+  <div class="container">
+    <div class="row">
+      <% @curtomers.each do |curtomer| %>
+        <div class="col-12 col-md-6 col-lg-6">
+          <% if curtomer.photo.attached? %>
+            <div class="card" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.2)), url(<%= cl_image_path curtomer.photo.key, height: 200, width: 250,:crop=>"fill" %>);">
+          <% else %>
+            <div class="card" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.2)), url(<%= image_url ("curtomer.png")%>);">
+          <% end %>
+              <div class="card-description">
+                <h2><%= curtomer.name %></h2>
+                <h2><i class="fas fa-euro-sign"></i> <%= curtomer.price_per_day %> per day</h2>
+              </div>
+            <%= link_to "", curtomer_path(curtomer), class: 'card-link' %>
+            </div>
+        </div>
+      <% end %>
+    </div>  
+  </div>
+
+  <div id="map"
+      data-markers="<%= @markers.to_json %>"
+      data-mapbox-api-key="<%= ENV['MAPBOX_API_KEY'] %>">
+  </div>
+
+</div>
