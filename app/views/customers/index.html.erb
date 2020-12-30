@@ -22,11 +22,11 @@
           <% if customer.photo.attached? %>
             <div class="card" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.2)), url(<%= cl_image_path customer.photo.key, height: 200, width: 250,:crop=>"fill" %>);">
           <% else %>
-            <div class="card" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.2)), url(<%= image_url ("customer.jpg")%>);">
+            <div class="card" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.2)), url(<%= image_url ("condominio.jpg")%>);">
           <% end %>
               <div class="card-description">
                 <h2><%= customer.name %></h2>
-                <h2><i class="fas fa-euro-sign"></i> <%= customer.price_per_day %> per day</h2>
+                <h2><i class="fas fa-euro-sign"></i> <%= customer.value %> per day</h2>
               </div>
             <%= link_to "", customer_path(customer), class: 'card-link' %>
             </div>
