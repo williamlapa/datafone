@@ -69,3 +69,6 @@ gem 'pg_search', '~> 2.3.0'
 
 # Faker
 gem 'faker'
+
+# Gemfile
+gem 'cloudinary', '~> 1.16.0'
