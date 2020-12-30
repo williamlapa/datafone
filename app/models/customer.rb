@@ -10,9 +10,6 @@ class Customer < ApplicationRecord
 
   pg_search_scope :search_by_name_zone_and_address,
                   against: %i[name zone address],
-                  associated_against: {
-                    category: [:name]
-                  },
                   using: {
                     tsearch: { prefix: true }
                   }
