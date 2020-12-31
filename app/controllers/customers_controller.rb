@@ -10,7 +10,7 @@ class CustomersController < ApplicationController
       {
         lat: customer.latitude,
         lng: customer.longitude,
-        infoWindow: render_to_string(partial: 'customers_details', locals: { customer: customer }),
+        infoWindow: render_to_string(partial: 'info_window', locals: { customer: customer }),
         image_url: helpers.asset_url('condominio.jpg')
       }
     end

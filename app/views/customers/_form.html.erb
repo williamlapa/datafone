@@ -1,0 +1,20 @@
+
+<%= simple_form_for(@customer) do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <div class="form-inputs">
+    <%= f.input :name, label: 'Nome do Cliente' %>
+    <%= f.input :address, label: 'Endereço' %>
+    <%= f.input :value, label: 'Valor do contrato' %>
+    <%= f.input :customer_since, label: 'Cliente desde (obrigatório)' %>
+    <%= f.input :customer_final, label: 'Cliente até (opcional)' %>
+    <%= f.input :zone, as: :select, collection: ['Zona Norte', 'Zona Sul'], label: 'Área' %>
+    <%= f.input :photo, as: :file, label: 'Incluir imagem do condomínio (opcional)' %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit, 'Salvar', class: 'btn btn-primary' %>
+  </div>
+  
+<% end %>

@@ -1,0 +1,10 @@
+  
+<% if current_user.role == 'adm' %>
+  <div class="container w-50 mt-3">
+    <h1 class="text-center">Editar Cliente</h1>
+
+    <%= render 'form', customer: @customer %>
+    <%= link_to 'Cancelar', @customer %> |
+    <%= link_to 'Clientes', customers_path %>
+  </div>
+<% end %>
