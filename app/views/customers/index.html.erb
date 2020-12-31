@@ -15,44 +15,23 @@
 </div>
 
 <div class="container d-flex">
-  <!--
-  <div class="container">
-    <div class="row">
-      <% @customers.each do |customer| %>
-        <div class="col-12 col-md-6 col-lg-6">
-          <% if customer.photo.attached? %>
-            <div class="card" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.2)), url(<%= cl_image_path customer.photo.key, height: 200, width: 250,:crop=>"fill" %>);">
-          <% else %>
-            <div class="card" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.2)), url(<%= image_url ("condominio.jpg")%>);">
-          <% end %>
-              <div class="card-description">
-                <h2><%= customer.name %></h2>
-                <h2><i class="fas fa-euro-sign"></i> <%= customer.value %> per day</h2>
-              </div>
-            <%= link_to "", customer_path(customer), class: 'card-link' %>
-            </div>
-        </div>
-      <% end %>
-    </div>  
-  </div>
-  -->
-  
-    <div class="row">
-      <% @customers.each do |customer| %>
+  <div class="row">
+    <% @customers.each do |customer| %>
         <div class="card-product">
-              <% if customer.photo.attached? %>
-                <img src="<%= cl_image_path customer.photo.key, height: 300, width: 400,:crop=>"fill" %>">
-              <% else %>
-                <img src="<%= image_url ("condominio.jpg")%>">
-              <% end %>
-                <div class="card-product-infos">
-                  <h2><%= customer.name %></h2>
-                  <p>Contrato: R$ <%= customer.value %></p>
-                  <p><strong><%= customer.zone.capitalize %></p></strong>
-                  <p>Cliente desde: <%= customer.customer_since.strftime("%d/%m/%Y") %></p>
-                </div>
+          <% if customer.photo.attached? %>
+            <img src="<%= cl_image_path customer.photo.key, height: 300, width: 400,:crop=>"fill" %>">
+          <% else %>
+            <img src="<%= image_url ("condominio.jpg")%>">
+          <% end %>
+          <div class="card-product-infos">
+            <h2><%= customer.name %></h2>
+            <p>Contrato: R$ <%= customer.value %></p>
+            <p><strong><%= customer.zone.capitalize %></p></strong>
+            <p>Cliente desde: <%= customer.customer_since.strftime("%d/%m/%Y") %></p>
+            <%= link_to "Detalhes", customer_path(customer), class: 'btn btn-primary btn-sm' %>
+          </div>
         </div>
-      <% end %>    
+    <% end %>
   </div>
 
   <div id="map" 
