@@ -1,0 +1,10 @@
+<% if current_user.role == 'adm' %>
+  <div class="container w-50 mt-3">
+    <div class="text-center">
+      <h1>Cadastrar mercadoria</h1>
+    </div>
+    <%= render 'form', customer: @customer %>
+
+    <%= link_to 'Voltar', customers_path %>
+  </div>
+<% end %>

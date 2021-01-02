@@ -1,0 +1,57 @@
+<% if current_user.role == 'adm' %>
+  <div class="container text-center">
+    <h2>Detalhes de <%= @customer.name %></h2>
+  </div>
+
+  <div class="container">
+    <div class="row justify-content-left">
+      <div class="col-4 col-md-4 col-lg-4">
+        <% if @customer.photo.attached? %>
+          <div class="card2" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.2)), url(<%= cl_image_path @customer.photo.key, height: 450, width: 600,:crop=>"fill" %>);">
+          </div>
+        <% else %>
+          <div class="card2" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.2)), url(<%= image_url ("condominio.jpg"), height: 450, width: 600 %>);">
+          </div>
+        <% end %>
+        <div class="ml-3">
+          <p><strong></strong> <%= @customer.name %></p>
+          <p><strong>Endereço:</strong> <%= @customer.address %></p>
+          <p><strong></strong> <%= @customer.zone %></p>
+          <p><strong>Cliente desde:</strong> <%= @customer.customer_since.strftime("%d/%m/%Y") %></p>
+          <p><strong>Contrato: R$ <%= @customer.value %></p>
+        </div>
+        <div class="container mt-2">
+          <%= link_to 'Voltar', :back %> |
+          <%= link_to 'Editar', edit_customer_path(@customer) %> |
+          <%= link_to 'Apagar', customer_path(@customer), method: :delete, data: { confirm: 'Tem certeza que você quer excluir esta mercadoria?'} %> 
+        </div>
+      </div>
+      <div class="col-8 col-md-8 col-lg-8 mt-2">
+        <h5 class="text-center">Chamados</h5>
+        <table class="table table-brequested table-striped">
+          <thead class="thead-light text-center">
+            <tr>
+              <th scope="col">Data do Chamado</th>
+              <th scope="col">Itens</th>
+              <th scope="col">Motivo</th>
+              <th scope="col">Técnico</th>
+              <th scope="col">Data conclusão</th>
+              <th scope="col">Status</th>
+            </tr>
+          </thead>
+        <% @customer.requests.each do |request| %>
+          <tr>
+            <td class="text-center"><%= request.created_at.strftime("%d/%m/%Y") %></td>
+            <td class="text-center"><%= request.updated_at.strftime("%d/%m/%Y") %></td>
+            <td class="text-center"><%= request.itens %></td>
+            <td class="text-center"><%= request.motivation %></td>
+            <td class="text-center"><%= request.employee_name %></td>
+            <td class="text-center"><%= request.status %></td>
+            <td class="text-center"><%= link_to 'Excluir', request_path(request), method: :delete, data: { confirm: 'Tem certeza que quer excluir esta ordem?'}, class: 'btn btn-outline-danger' %></td>
+          </tr>
+        <% end %> 
+        </table>
+      </div>
+    </div>
+  </div>
+<% end %>

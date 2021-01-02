@@ -60,3 +60,15 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
+#Geocoding
+gem 'geocoder'
+
+#search
+gem 'pg_search', '~> 2.3.0'
+
+# Faker
+gem 'faker'
+
+# Gemfile
+gem 'cloudinary', '~> 1.16.0'
