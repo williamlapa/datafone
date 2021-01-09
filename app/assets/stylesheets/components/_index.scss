@@ -8,8 +8,8 @@
 @import "masthead";
 @import "navbar2";
 @import "portfolio";
-@import "utilities";
-@import "variables";
+// @import "utilities";
+// @import "variables";
 
 
 // Import custom styles
@@ -19,7 +19,7 @@
 @import "./portfolio.scss";
 
 // Import custom utilities
-@import "./utilities.scss";
+// @import "./utilities.scss";
 
 // Import custom variables and override default Bootstrap variables
-@import "./variables.scss";
+// @import "./variables.scss";
