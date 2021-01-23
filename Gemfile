@@ -72,3 +72,4 @@ gem 'faker'
 
 # Gemfile
 gem 'cloudinary', '~> 1.16.0'
+

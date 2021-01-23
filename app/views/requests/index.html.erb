@@ -1,0 +1,138 @@
+<% if current_user.role == 'adm' %>
+  <div class="container mt-1 p-1 d-flex justify-content-around">
+    <div>
+      <h1 class="mt-3">Chamados</h1>
+      
+    </div>
+    <div class="mt-3 col-6">
+      <%= simple_form_for :search, url: requests_path, method: :get do |f| %>
+        <div class="search-form-control form-group">
+          <input class="form-control string required" type="text" name="query" id="query"/>
+          <button name="button" type="submit" class="btn btn-flat" >
+            <i class="fas fa-search"></i>Pesquisar
+          </button>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>
+<div class="container mt-0">
+  <div class="row">
+    <% if current_user.role == 'adm' %>
+      <table class="table table-bordered table-striped">
+        <thead class="thead-light text-center">
+          <tr>
+            <th scope="col">Nº</th>
+            <th scope="col">Data</th>
+            <th scope="col">Cliente</th>
+            <th scope="col">Tipo Visita</th>
+            <th scope="col">Descrição</th>
+            
+            <th scope="col">Status</th>
+            <th scope="col" colspan="2">Opções</th>
+          </tr>
+        </thead>
+        <% @requests.each do |request| %>
+          <tr>
+            <td class="text-center"><%= request.id %></td>
+            <td class="text-center"><%= request.created_at.strftime("%d/%m/%Y") %></td>
+            <td class="text-center"><%= request.customer.name %></td>
+            <td class="text-center"><%= request.motivation.capitalize %></td>
+            <td><%= request.description %></td>
+            <% if request.status == 'Em análise'%>
+              <td class="text-center"><i class="far fa-hourglass" aria-hidden="true"></i> <strong><%= request.status %></strong></td>            
+            <% elsif request.status == 'Encerrada' %>
+              <td class="text-center"><i class="fa fa-lock" aria-hidden="true"></i><strong><%= request.status %></strong></td>
+            <% else %>
+              <td></td>
+            <% end %>
+            <div>
+              <td class="text-center">
+                <%= link_to '', request_path(request), class: 'fa fa-eye' %>
+                <%= link_to '', request_path(request), method: :delete, data: { confirm: 'Confirma cancelar a requisição?'}, class: 'fa fa-trash' %>
+                </td>
+            </div>
+          </tr>
+        <% end %>
+      </table>
+    <% else %>
+      <div class="container">
+        <div>
+          <h1 class="container mt-3 text-center">Chamados</h1>
+        </div>
+      </div>
+      <div class="col-4 mt-3">
+        <div class="card-trip" >
+          <%= image_tag "condominio.jpg" %>
+          <div class="card-trip-infos">
+            <div>
+              <h2>Entidade:</h2>
+              <p><%= customer.name %></p>
+              <h2>Área:</h2>
+              <p><%= customer.zone %></p>
+            </div>
+          </div>
+        </div>
+      </div>
+  <%# FIM DO CARD DA ENTIDADE %>
+      <div class="col-8 mt-3">
+        <table class="table table-bordered table-striped">
+          <thead class="thead-light text-center">
+            <tr>
+              <th scope="col">Nº</th>
+              <th scope="col">Categoria</th>
+              <th scope="col">Data</th>
+              <th scope="col">Status</th>
+              <th scope="col">Opções</th>
+            </tr>
+          </thead>
+          <% current_user.requests.each do |request| %>
+              <tr>
+                <td class="text-center"><%= request.id %></td>
+                <td class="text-center">
+                  <div class="dropdown">
+                    <span><strong><%= request.customer.name.capitalize %></strong></span>
+                      <div class="dropdown-content"><p><%= request.description %></p>
+                      </div>
+                  </div>
+                </td>
+                <td class="text-center"><%= request.created_at.strftime("%d/%m/%Y") %></td>
+                <% if request.status == 'Em análise'%>
+                  <td class="text-center"><i class="far fa-hourglass" aria-hidden="true"></i><strong><%= request.status %></strong></td>
+                <% elsif request.status == 'Aprovada' %>
+                  <td class="text-center"><i class="fa fa-check" aria-hidden="true"></i><strong><%= request.status %></strong></td>
+                <% elsif request.status == 'Rejeitada' %>
+                  <td class="text-center"><i class="fa fa-times" aria-hidden="true"></i><strong><%= request.status %></strong></td>
+                <% elsif request.status == 'A retirar' %>
+                  <td class="text-center"><i class="fa fa-truck" aria-hidden="true"></i><strong><%= request.status %></strong></td>
+                <% elsif request.status == 'Encerrada' %>
+                  <td class="text-center"><i class="fa fa-lock" aria-hidden="true"></i><strong><%= request.status %></strong></td>
+                <% else %>
+                  <td></td>
+                <% end %>
+                <td class="text-center">
+                  <%= link_to '', request_path(request), class: 'fa fa-eye' %>
+                  <% if request.status == 'Em análise' %>
+                    <%= link_to '', edit_request_path(request), class: "fa fa-edit" %>
+                  <% else %>
+                    <i class="fas fa-edit"></i>
+                  <% end %>
+                  <% if request.status == 'Aprovada' || request.status == 'A retirar' %>
+                    <button type="button" data-toggle="modal" data-target="#exampleModalLong"><i class="far fa-envelope-open" aria-hidden="true"></i></button>
+                  <% else %>
+                    <i class="fas fa-envelope"></i>
+                  <% end %>
+                  <% if request.status != 'Encerrada' %>
+                    <%= link_to '', request_path(request), method: :delete, data: { confirm: 'Tem certeza que quer excluir esta requisição?'}, class: "fa fa-trash" %>
+                  <% else %>
+                    <i class="fas fa-trash"></i>
+                  <% end %>
+                </td>
+              </tr>
+          <% end %>
+        </table>
+        <a class="btn btn-primary" href="<%= new_request_path %>">Nova requisição</a>
+      </div>
+    <% end %>
+  </div>
+</div>

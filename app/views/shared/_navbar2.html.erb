@@ -8,6 +8,50 @@
             <ul class="navbar-nav ml-auto my-2 my-lg-0">
                 <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#services">Serviços</a></li>
                 <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#contact">Contato</a></li>
+              
+              <!-- INSERÇÃO AQUI -->
+              
+              <% if user_signed_in? %>
+                <% if current_user.role == 'adm' %>
+                  <li class="nav-item dropdown active">
+                  <a class="nav-link dropdown-toggle" href="#" id="nav_item" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Chamados</a>
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="<%= requests_path %>">Consultar chamados</a>
+                    <a class="dropdown-item" href="<%= new_request_path %>">Criar chamado</a>
+                  </div>
+                <% end %>
+                </li>
+                  <% if current_user.role == 'adm' %>
+                    <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" href="#" id="nav_item" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Clientes</a>
+                      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="<%= customers_path %>">Consultar clientes</a>
+                        <a class="dropdown-item" href="<%= new_customer_path %>">Cadastrar Cliente</a>
+                      </div>
+                    </li>
+                  <% end %>
+
+                <li class="nav-item dropdown">
+                  <% if current_user.photo.attached? %>
+                    <%= cl_image_tag current_user.photo.key, class: "avatar dropdown-toggle", id: "navbarDropdown", data: { toggle: "dropdown" }, 'aria-haspopup': true, 'aria-expanded': false %>
+                  <% else %>
+                    <%= image_tag "person-placeholder.jpg", class: "avatar dropdown-toggle", id: "navbarDropdown", data: { toggle: "dropdown" }, 'aria-haspopup': true, 'aria-expanded': false %>
+                  <% end %>
+                  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                  <%= link_to "Editar usuário", edit_user_registration_path, class: "dropdown-item" %>
+                  <%= link_to "Sair", destroy_user_session_path, method: :delete, class: "dropdown-item" %>
+                  </div>
+                </li>
+
+              <% else %>
+                <li class="nav-item" id="nav_entrar">
+                  <%= link_to "Entrar", new_user_session_path, class: "nav-link js-scroll-trigger" %>
+                </li>
+              <% end %>
+
+            <!-- fim da inserção aqui -->
             </ul>
         </div>
     </div>

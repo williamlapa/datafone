@@ -2,9 +2,9 @@ Rails.application.routes.draw do
   devise_for :users
   root to: 'pages#home'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
-  resources :customers do
-    resources :requests, only: %i[new create]
+  resources :requests do
+    resources :customers, only: %i[index show]
   end
 
-  resources :requests, only: [:destroy]
+  resources :customers
 end
